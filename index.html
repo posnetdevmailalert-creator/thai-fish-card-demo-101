@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Thai Fish Care - ระบบบันทึกการดูแลปลากัด" />
+    <title>Thai Fish Care | Fish Care Journal</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#" aria-label="Thai Fish Care home">
+          <span class="brand-mark">B</span>
+          <span
+            ><strong>Thai Fish Care</strong><small>Fish Care Journal</small></span
+          >
+        </a>
+        <p class="nav-label">WORKSPACE</p>
+        <nav class="navigation" aria-label="Main navigation">
+          <button class="nav-link active" data-view="dashboard">
+            <span>⌂</span> Dashboard
+          </button>
+          <button class="nav-link" data-view="fishes">
+            <span>◉</span> My Fishes
+          </button>
+          <button class="nav-link" data-view="records">
+            <span>▤</span> Care Records
+          </button>
+        </nav>
+        <div class="sidebar-note">
+          <span class="note-dot"></span>
+          <div>
+            <strong>Your care journal</strong
+            ><small>Keep every little detail.</small>
+          </div>
+        </div>
+        <p class="sidebar-footer">Thai Fish Care · DEMO 101</p>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="menu-button" id="menuButton" aria-label="Toggle menu">
+            ☰
+          </button>
+          <div>
+            <span class="eyebrow">Thai Fish Care</span>
+            <h1 id="pageTitle">Dashboard</h1>
+          </div>
+          <button class="button button-primary" id="topAddFish">
+            ＋ <span>Add New Fish</span>
+          </button>
+        </header>
+
+        <section class="view active" id="dashboardView">
+          <div class="welcome-row">
+            <div>
+              <h2>Good day, fish keeper.</h2>
+              <p>Here is an overview of your care journal.</p>
+            </div>
+            <span class="date-chip" id="todayLabel"></span>
+          </div>
+          <div class="stats-grid">
+            <article class="stat-card">
+              <span class="stat-icon blue">◉</span>
+              <p>Total fishes</p>
+              <strong id="totalFish">0</strong
+              ><small>Registered in your journal</small>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon green">＋</span>
+              <p>Feeding records</p>
+              <strong id="totalFeeding">0</strong
+              ><small>Activities recorded</small>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon amber">◷</span>
+              <p>Water care records</p>
+              <strong id="totalWater">0</strong
+              ><small>Water changes recorded</small>
+            </article>
+          </div>
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Recent care activities</h3>
+                <p>Your latest recorded activities</p>
+              </div>
+              <button class="text-button" data-go="records">View all</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Fish</th>
+                    <th>Activity</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="recentRows"></tbody>
+              </table>
+            </div>
+            <p class="empty-state" id="recentEmpty">
+              No activities yet. Add a fish and record its first care activity.
+            </p>
+          </div>
+        </section>
+
+        <section class="view" id="fishesView">
+          <div class="section-heading">
+            <div>
+              <h2>My Fishes</h2>
+              <p>Manage your betta fish collection.</p>
+            </div>
+            <button class="button button-primary" id="addFishButton">
+              ＋ Add Fish
+            </button>
+          </div>
+          <div class="toolbar">
+            <input
+              id="fishSearch"
+              type="search"
+              placeholder="Search fish by name or species..."
+              aria-label="Search fishes"
+            /><span id="fishCount" class="muted"></span>
+          </div>
+          <div class="fish-grid" id="fishGrid"></div>
+          <p class="empty-state" id="fishEmpty">
+            No fish found. Add your first betta fish to get started.
+          </p>
+        </section>
+
+        <section class="view" id="recordsView">
+          <div class="section-heading">
+            <div>
+              <h2>Care Records</h2>
+              <p>Keep track of feeding, water changes and observations.</p>
+            </div>
+          </div>
+          <div class="panel record-panel">
+            <form id="recordForm">
+              <div class="form-heading">
+                <h3>New care record</h3>
+                <p>Choose a fish and record an activity.</p>
+              </div>
+              <div class="form-grid">
+                <label
+                  >Fish<select id="recordFish" required>
+                    <option value="">Select a fish</option>
+                  </select></label
+                >
+                <label
+                  >Activity<select id="recordType" required>
+                    <option value="Feeding">Feeding</option>
+                    <option value="Water change">Water change</option>
+                    <option value="Health observation">
+                      Health observation
+                    </option>
+                  </select></label
+                >
+                <label
+                  >Date and time<input
+                    id="recordDate"
+                    type="datetime-local"
+                    required
+                /></label>
+                <label id="quantityLabel"
+                  >Food / details<input
+                    id="recordDetails"
+                    type="text"
+                    maxlength="100"
+                    placeholder="e.g. Betta pellets, 5 pieces"
+                    required
+                /></label>
+                <label class="full-field"
+                  >Notes (optional)<textarea
+                    id="recordNotes"
+                    rows="3"
+                    maxlength="300"
+                    placeholder="Add a short note..."
+                  ></textarea>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="button button-primary" type="submit">
+                  Save record
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Activity history</h3>
+                <p>All care activities, newest first</p>
+              </div>
+              <select
+                id="recordFilter"
+                class="filter-select"
+                aria-label="Filter records"
+              >
+                <option value="All">All activities</option>
+                <option>Feeding</option>
+                <option>Water change</option>
+                <option>Health observation</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Fish</th>
+                    <th>Activity</th>
+                    <th>Details</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="recordRows"></tbody>
+              </table>
+            </div>
+            <p class="empty-state" id="recordEmpty">No care records yet.</p>
+          </div>
+        </section>
+        <footer class="app-footer">
+          Thai Fish Care demo project
+        </footer>
+      </main>
+    </div>
+
+    <dialog id="fishDialog" class="dialog">
+      <form id="fishForm" method="dialog">
+        <div class="dialog-heading">
+          <div>
+            <span class="eyebrow">FISH PROFILE</span>
+            <h2 id="dialogTitle">Add new fish</h2>
+          </div>
+          <button
+            type="button"
+            class="icon-button"
+            id="closeDialog"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+        <input type="hidden" id="fishId" />
+        <label
+          >Fish name<input
+            id="fishName"
+            type="text"
+            maxlength="40"
+            placeholder="e.g. Blue Moon"
+            required
+        /></label>
+        <div class="form-grid">
+          <label
+            >Species<select id="fishSpecies" required>
+              <option value="">Select species</option>
+              <option>Halfmoon</option>
+              <option>Plakat</option>
+              <option>Crowntail</option>
+              <option>Veiltail</option>
+              <option>Double Tail</option>
+              <option>Other</option>
+            </select></label
+          >
+          <label
+            >Color<input
+              id="fishColor"
+              type="text"
+              maxlength="30"
+              placeholder="e.g. Blue / White"
+              required
+          /></label>
+          <label
+            >Birth date (optional)<input id="fishBirthDate" type="date"
+          /></label>
+          <label
+            >Start date<input id="fishStartDate" type="date" required
+          /></label>
+          <label class="full-field"
+            >Notes (optional)<textarea
+              id="fishNotes"
+              rows="3"
+              maxlength="300"
+              placeholder="About this fish..."
+            ></textarea>
+          </label>
+        </div>
+        <p class="form-error" id="fishError" role="alert"></p>
+        <div class="form-actions">
+          <button
+            type="button"
+            class="button button-secondary"
+            id="cancelDialog"
+          >
+            Cancel</button
+          ><button type="submit" class="button button-primary">
+            Save fish
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
